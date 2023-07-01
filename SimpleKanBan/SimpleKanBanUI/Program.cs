@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using SimpleKanBanUI;
 
 namespace SimpleKanBanUI;
 
@@ -9,9 +10,7 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // Add services to the container.
-        builder.Services.AddRazorPages();
-        builder.Services.AddServerSideBlazor();
+        builder.ConfigureServices();
 
         var app = builder.Build();
 
