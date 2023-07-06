@@ -22,9 +22,9 @@ public class ItemModel
 
     public StatusModel ItemStatus { get; set; }
 
-    public CategoryModel Category { get; set; }
+    public CategoryModel ItemCategory { get; set; }
 
     public List<string> Comments { get; set; }
 
-    public bool Archived { get; set; }
+    public bool Archived { get; set; } = false;
 }
