@@ -16,7 +16,7 @@ public class UserModel
 
     public string EmailAddress { get; set; }
 
-    public List<ItemModel> AuthoredItems { get; set; } = new();
+    public List<BasicItemModel> AuthoredItems { get; set; } = new();
 
     public List<ItemModel> ResponsibleForItems { get; set; } = new();
 }
