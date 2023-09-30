@@ -1,6 +1,8 @@
 ﻿@page "/SampleData"
 @inject ICategoryData categoryData
 @inject IStatusData statusData
+@inject IUserData userData
+@inject IItemData itemData
 
 <h3>SampleData</h3>
 
@@ -22,12 +24,84 @@ else
     <button class="btn btn-primary" @onclick="CreateStatuses">Create Statuses</button>
 }
 
+<button class="btn btn-danger" @onclick="GenerateSampleData">Generate Sample Data</button>
 
 
 @code {
 
     private bool categoriesCreated = false;
     private bool statusesCreated = false;
+
+    private async Task GenerateSampleData()
+    {
+        UserModel user = new()
+            {
+                FirstName = "Jakov",
+                LastName = "Konta",
+                EmailAddress = "jakov@test.com",
+                DisplayName = "Sample Jakov Konta",
+                ObjectIdentifier = "abc-123"
+            };
+        await userData.CreateUser(user);
+
+        var foundUser = await userData.GetUserFromAuthentication("abc-123");
+        var categories = await categoryData.GetAllCategories();
+        var statuses = await statusData.GetAllStatuses();
+
+        ItemModel item = new()
+            {
+                Author = new BasicUserModel(foundUser),
+                ItemCategory = categories[0],
+                Title = "Our First Item",
+                Description = "This is an item created by sample data generation method"
+            };
+
+        await itemData.CreateItem(item);
+
+        item = new()
+            {
+                Author = new BasicUserModel(foundUser),
+                ItemCategory = categories[1],
+                Title = "Our Second Item",
+                Description = "This is an item created by sample data generation method",
+                ItemStatus = statuses[0]
+            };
+
+        await itemData.CreateItem(item);
+
+        item = new()
+            {
+                Author = new BasicUserModel(foundUser),
+                ItemCategory = categories[0],
+                Title = "Our Third Item",
+                Description = "This is an item created by sample data generation method",
+                ItemStatus = statuses[1]
+            };
+
+        await itemData.CreateItem(item);
+
+        item = new()
+            {
+                Author = new BasicUserModel(foundUser),
+                ItemCategory = categories[1],
+                Title = "Our Fourth Item",
+                Description = "This is an item created by sample data generation method",
+                ItemStatus = statuses[2]
+            };
+
+        await itemData.CreateItem(item);
+
+        item = new()
+            {
+                Author = new BasicUserModel(foundUser),
+                ItemCategory = categories[0],
+                Title = "Our Fifth Item",
+                Description = "This is an item created by sample data generation method",
+                ItemStatus = statuses[2]
+            };
+
+        await itemData.CreateItem(item);
+    }
 
     private async Task CreateCategories()
     {
@@ -100,4 +174,6 @@ else
 
         statusesCreated = true;
     }
+
+
 }
