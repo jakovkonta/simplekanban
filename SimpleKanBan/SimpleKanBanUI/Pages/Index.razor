@@ -1,7 +1,47 @@
 ﻿@page "/"
+@inject ICategoryData categoryData
+@inject IStatusData statusData
+@inject IItemData itemData
+@inject IUserData userData
+@inject NavigationManager navManager
+@inject ProtectedSessionStorage sessionStorage
 
-<PageTitle>Index</PageTitle>
+@code{
+    private List<ItemModel> items;
+    private List<CategoryModel> categories;
+    private List<StatusModel> statuses;
 
-<h1>Hello, world!</h1>
+    private string searchText = "";
 
-Welcome to your new app.
+    protected async override Task OnInitializedAsync()
+    {
+        categories = await categoryData.GetAllCategories();
+        statuses = await statusData.GetAllStatuses();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await LoadFilterState();
+            StateHasChanged();
+        }
+    }
+
+    private async Task LoadFilterState()
+    {
+        var stringResults = await sessionStorage.GetAsync<string>(nameof(searchText));
+        searchText = stringResults.Success ? stringResults.Value : "";
+    }
+
+    private async Task FilterItems()
+    {
+        var output = await itemData.GetAllItems();
+
+        if (string.IsNullOrWhiteSpace(searchText) == false)
+        {
+            output = output.Where(
+                i => i.Title.Contains(searchText, StringComparison.InvariantCultureIgnoreCase)).ToList();
+        }
+    }
+}
