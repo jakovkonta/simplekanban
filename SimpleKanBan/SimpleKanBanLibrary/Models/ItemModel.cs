@@ -16,7 +16,7 @@ public class ItemModel
 
     public DateTime DateClosed { get; set; }
 
-    public UserModel Author { get; set; }
+    public BasicUserModel Author { get; set; }
 
     public string Responsible { get; set; }
 
