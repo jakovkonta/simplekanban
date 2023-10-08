@@ -24,6 +24,7 @@
         if (firstRender)
         {
             await LoadFilterState();
+            await FilterItems();
             StateHasChanged();
         }
     }
@@ -32,6 +33,11 @@
     {
         var stringResults = await sessionStorage.GetAsync<string>(nameof(searchText));
         searchText = stringResults.Success ? stringResults.Value : "";
+    }
+
+    private async Task SaveFilterState()
+    {
+        await sessionStorage.SetAsync(nameof(searchText), searchText);
     }
 
     private async Task FilterItems()
@@ -43,5 +49,7 @@
             output = output.Where(
                 i => i.Title.Contains(searchText, StringComparison.InvariantCultureIgnoreCase)).ToList();
         }
+
+        await SaveFilterState();
     }
 }
