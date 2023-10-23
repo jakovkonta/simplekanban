@@ -6,8 +6,57 @@
 @inject NavigationManager navManager
 @inject ProtectedSessionStorage sessionStorage
 
+<h1>Training KanBan</h1>
+
+<div>
+    <button>New item</button>
+</div>
+
+<div class="row">
+    @if (items is not null)
+    {
+        <div class="column">
+            <h2>New</h2>
+        </div>
+        <div class="column">
+            <h2>In Progress</h2>
+            @if (inProgressItems is not null)
+            {
+                foreach (var progressItem in inProgressItems)
+                {
+                    <p>@progressItem.Title</p>
+                }
+            }
+        </div>
+        <div class="column">
+            <h2>In Testing</h2>
+            @if (inTestingItems is not null)
+            {
+                foreach (var testingItem in inTestingItems)
+                {
+                    <p>@testingItem.Title</p>
+                }
+            }
+        </div>
+        <div class="column">
+            <h2>Done</h2>
+            @if (doneItems is not null)
+            {
+                foreach (var doneItem in doneItems)
+                {
+                    <p>@doneItem.Title</p>
+                }
+            }
+        </div>
+    }
+</div>
+
 @code{
     private List<ItemModel> items;
+    private List<ItemModel> newItems;
+    private List<ItemModel> inProgressItems;
+    private List<ItemModel> inTestingItems;
+    private List<ItemModel> doneItems;
     private List<CategoryModel> categories;
     private List<StatusModel> statuses;
 
@@ -42,14 +91,22 @@
 
     private async Task FilterItems()
     {
-        var output = await itemData.GetAllItems();
+        items = await itemData.GetAllItems();
 
         if (string.IsNullOrWhiteSpace(searchText) == false)
         {
-            output = output.Where(
+            items = items.Where(
                 i => i.Title.Contains(searchText, StringComparison.InvariantCultureIgnoreCase)).ToList();
         }
 
         await SaveFilterState();
+
+        if (items is not null)
+        {
+            newItems = items.Where(i => i.ItemStatus.StatusName.Equals(Enum.GetName(Statuses.New))).ToList();
+            inProgressItems = items.Where(i => i.ItemStatus.StatusName.Equals(Enum.GetName(Statuses.Progress))).ToList();
+            inTestingItems = items.Where(i => i.ItemStatus.StatusName.Equals(Enum.GetName(Statuses.Testing))).ToList();
+            doneItems = items.Where(i => i.ItemStatus.StatusName.Equals(Enum.GetName(Statuses.Done))).ToList();
+        }
     }
 }
