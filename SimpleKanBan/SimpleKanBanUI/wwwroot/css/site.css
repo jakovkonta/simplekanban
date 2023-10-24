@@ -74,3 +74,10 @@ a, .btn-link {
         width: 100%;
     }
 }
+
+.item {
+    border: 5px outset gray;
+    background-color: lightblue;
+    margin-bottom: 5px; 
+    border-radius: 15px;
+}

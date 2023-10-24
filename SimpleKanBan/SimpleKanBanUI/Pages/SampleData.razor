@@ -34,15 +34,15 @@ else
 
     private async Task GenerateSampleData()
     {
-        UserModel user = new()
-            {
-                FirstName = "Jakov",
-                LastName = "Konta",
-                EmailAddress = "jakov@test.com",
-                DisplayName = "Sample Jakov Konta",
-                ObjectIdentifier = "abc-123"
-            };
-        await userData.CreateUser(user);
+        //UserModel user = new()
+        //    {
+        //        FirstName = "Jakov",
+        //        LastName = "Konta",
+        //        EmailAddress = "jakov@test.com",
+        //        DisplayName = "Sample Jakov Konta",
+        //        ObjectIdentifier = "abc-123"
+        //    };
+        //await userData.CreateUser(user);
 
         var foundUser = await userData.GetUserFromAuthentication("abc-123");
         var categories = await categoryData.GetAllCategories();
@@ -53,7 +53,8 @@ else
                 Author = new BasicUserModel(foundUser),
                 ItemCategory = categories[0],
                 Title = "Our First Item",
-                Description = "This is an item created by sample data generation method"
+                Description = "This is an item created by sample data generation method",
+                ItemStatus = statuses[0]
             };
 
         await itemData.CreateItem(item);
@@ -69,24 +70,57 @@ else
 
         await itemData.CreateItem(item);
 
+        //item = new()
+        //    {
+        //        Author = new BasicUserModel(foundUser),
+        //        ItemCategory = categories[0],
+        //        Title = "Our Third Item",
+        //        Description = "This is an item created by sample data generation method",
+        //        ItemStatus = statuses[1]
+        //    };
+
+        //await itemData.CreateItem(item);
+
         item = new()
             {
                 Author = new BasicUserModel(foundUser),
                 ItemCategory = categories[0],
-                Title = "Our Third Item",
+                Title = "Our Third Eight Item",
                 Description = "This is an item created by sample data generation method",
                 ItemStatus = statuses[1]
             };
 
         await itemData.CreateItem(item);
 
+        //item = new()
+        //    {
+        //        Author = new BasicUserModel(foundUser),
+        //        ItemCategory = categories[1],
+        //        Title = "Our Fourth Item",
+        //        Description = "This is an item created by sample data generation method",
+        //        ItemStatus = statuses[2]
+        //    };
+
+        //await itemData.CreateItem(item);
+
+        //item = new()
+        //    {
+        //        Author = new BasicUserModel(foundUser),
+        //        ItemCategory = categories[0],
+        //        Title = "Our Fifth Item",
+        //        Description = "This is an item created by sample data generation method",
+        //        ItemStatus = statuses[2]
+        //    };
+
+        //await itemData.CreateItem(item);
+
         item = new()
             {
                 Author = new BasicUserModel(foundUser),
-                ItemCategory = categories[1],
-                Title = "Our Fourth Item",
+                ItemCategory = categories[0],
+                Title = "Our Sixt Item",
                 Description = "This is an item created by sample data generation method",
-                ItemStatus = statuses[2]
+                ItemStatus = statuses[3]
             };
 
         await itemData.CreateItem(item);
@@ -95,9 +129,9 @@ else
             {
                 Author = new BasicUserModel(foundUser),
                 ItemCategory = categories[0],
-                Title = "Our Fifth Item",
+                Title = "Our Seventh Item",
                 Description = "This is an item created by sample data generation method",
-                ItemStatus = statuses[2]
+                ItemStatus = statuses[3]
             };
 
         await itemData.CreateItem(item);
