@@ -1,0 +1,25 @@
+﻿@inject NavigationManager navManager
+
+<div class="indexDisplayItem">
+<div @ondblclick="(() => OpenDetails(Item))">
+    <div>
+        <button @onclick="(() => OpenDetails(Item))" class="itemTitle">
+             @Item.Title
+        </button>
+    </div>
+    <p>@Item.Description</p>
+</div>
+</div>
+
+@code {
+
+    [Parameter]
+    public ItemModel Item { get; set; }
+
+
+    private void OpenDetails(ItemModel item)
+    {
+        navManager.NavigateTo($"Details/{item.Id}");
+    }
+
+}

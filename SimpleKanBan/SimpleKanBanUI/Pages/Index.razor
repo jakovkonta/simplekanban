@@ -1,7 +1,119 @@
 ﻿@page "/"
+@inject ICategoryData categoryData
+@inject IStatusData statusData
+@inject IItemData itemData
+@inject IUserData userData
+@inject NavigationManager navManager
+@inject ProtectedSessionStorage sessionStorage
 
-<PageTitle>Index</PageTitle>
+<h1>Training KanBan</h1>
 
-<h1>Hello, world!</h1>
+<div>
+    <button>New item</button>
+</div>
 
-Welcome to your new app.
+<div class="row">
+    @if (items is not null)
+    {
+        <div class="column">
+            <h2>New</h2>
+            @if (newItems is not null)
+            {
+                foreach (var newItem in newItems)
+                {
+                   <ItemComponent Item = "newItem"/>
+                }
+            }
+        </div>
+        <div class="column">
+            <h2>In Progress</h2>
+            @if (inProgressItems is not null)
+            {
+                foreach (var progressItem in inProgressItems)
+                {
+                    <ItemComponent Item="progressItem" />
+                }
+            }
+        </div>
+        <div class="column">
+            <h2>In Testing</h2>
+            @if (inTestingItems is not null)
+            {
+                foreach (var testingItem in inTestingItems)
+                {
+                    <ItemComponent Item="testingItem" />
+                }
+            }
+        </div>
+        <div class="column">
+            <h2>Done</h2>
+            @if (doneItems is not null)
+            {
+                foreach (var doneItem in doneItems)
+                {
+                    <ItemComponent Item="doneItem" />
+                }
+            }
+        </div>
+    }
+</div>
+
+@code{
+    private List<ItemModel> items;
+    private List<ItemModel> newItems;
+    private List<ItemModel> inProgressItems;
+    private List<ItemModel> inTestingItems;
+    private List<ItemModel> doneItems;
+    private List<CategoryModel> categories;
+    private List<StatusModel> statuses;
+
+    private string searchText = "";
+
+    protected async override Task OnInitializedAsync()
+    {
+        categories = await categoryData.GetAllCategories();
+        statuses = await statusData.GetAllStatuses();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await LoadFilterState();
+            await FilterItems();
+            StateHasChanged();
+        }
+    }
+
+    private async Task LoadFilterState()
+    {
+        var stringResults = await sessionStorage.GetAsync<string>(nameof(searchText));
+        searchText = stringResults.Success ? stringResults.Value : "";
+    }
+
+    private async Task SaveFilterState()
+    {
+        await sessionStorage.SetAsync(nameof(searchText), searchText);
+    }
+
+    private async Task FilterItems()
+    {
+        items = await itemData.GetAllItems();
+
+        if (string.IsNullOrWhiteSpace(searchText) == false)
+        {
+            items = items.Where(
+                i => i.Title.Contains(searchText, StringComparison.InvariantCultureIgnoreCase)).ToList();
+        }
+
+        await SaveFilterState();
+
+        if (items is not null)
+        {
+            newItems = items.Where(i => i.ItemStatus.StatusName.Equals(Enum.GetName(Statuses.New))).ToList();
+            inProgressItems = items.Where(i => i.ItemStatus.StatusName.Equals(Enum.GetName(Statuses.Progress))).ToList();
+            inTestingItems = items.Where(i => i.ItemStatus.StatusName.Equals(Enum.GetName(Statuses.Testing))).ToList();
+            doneItems = items.Where(i => i.ItemStatus.StatusName.Equals(Enum.GetName(Statuses.Done))).ToList();
+        }
+    }
+}

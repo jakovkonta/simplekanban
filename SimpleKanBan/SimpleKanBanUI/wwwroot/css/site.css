@@ -62,3 +62,33 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+.column {
+    float: left;
+    width: 25%;
+    padding: 10px;
+}
+
+@media screen and (max-width: 600px) {
+    .column {
+        width: 100%;
+    }
+}
+
+.indexDisplayItem {
+    border: 5px outset gray;
+    background-color: lightblue;
+    margin-bottom: 5px; 
+    border-radius: 15px;
+}
+
+.itemTitle {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    text-decoration: underline;
+}
