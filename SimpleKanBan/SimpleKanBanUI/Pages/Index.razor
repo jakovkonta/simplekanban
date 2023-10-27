@@ -21,7 +21,7 @@
             {
                 foreach (var newItem in newItems)
                 {
-                    @ItemDisplay(newItem)
+                   <ItemComponent Item = "newItem"/>
                 }
             }
         </div>
@@ -31,7 +31,7 @@
             {
                 foreach (var progressItem in inProgressItems)
                 {
-                    @ItemDisplay(progressItem)
+                    <ItemComponent Item="progressItem" />
                 }
             }
         </div>
@@ -41,7 +41,7 @@
             {
                 foreach (var testingItem in inTestingItems)
                 {
-                    @ItemDisplay(testingItem)
+                    <ItemComponent Item="testingItem" />
                 }
             }
         </div>
@@ -51,7 +51,7 @@
             {
                 foreach (var doneItem in doneItems)
                 {
-                    @ItemDisplay(doneItem)
+                    <ItemComponent Item="doneItem" />
                 }
             }
         </div>
@@ -74,14 +74,6 @@
         categories = await categoryData.GetAllCategories();
         statuses = await statusData.GetAllStatuses();
     }
-
-    private RenderFragment<ItemModel> ItemDisplay = item =>
-            @<div class="item">
-                <div>
-                    <p>@item.Title</p>
-                    <p>@item.Description</p>
-                </div>
-            </div>;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -123,10 +115,5 @@
             inTestingItems = items.Where(i => i.ItemStatus.StatusName.Equals(Enum.GetName(Statuses.Testing))).ToList();
             doneItems = items.Where(i => i.ItemStatus.StatusName.Equals(Enum.GetName(Statuses.Done))).ToList();
         }
-    }
-
-    private void OpenDetails(ItemModel item)
-    {
-        navManager.NavigateTo($"Details/{item.Id}");
     }
 }

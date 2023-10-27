@@ -5,7 +5,7 @@ VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleKanBanUI", "SimpleKanBanUI\SimpleKanBanUI.csproj", "{91CDC873-7C10-4FEC-8369-62E9A2A4B4ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleKanBanLibrary", "SimpleKanBanLibrary\SimpleKanBanLibrary.csproj", "{AE45C25D-A69D-4500-8C47-6ADF07A1D774}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleKanBanLibrary", "SimpleKanBanLibrary\SimpleKanBanLibrary.csproj", "{AE45C25D-A69D-4500-8C47-6ADF07A1D774}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
