@@ -1,0 +1,34 @@
+﻿@page "/Details/{Id}"
+@inject IItemData itemData
+@inject NavigationManager navManager
+
+<h1>Item Details</h1>
+
+<div>
+    @if (item is not null)
+    {
+        <div>@item.Title</div>
+        <div>@item.ItemStatus.StatusName</div>
+        <div>@item.Description</div>
+    }
+    <div>
+        <button @onclick="ClosePage">X</button>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+
+    private ItemModel item;
+
+    protected async override Task OnInitializedAsync()
+    {
+        item = await itemData.GetItem(Id);
+    }
+
+    private void ClosePage()
+    {
+        navManager.NavigateTo("/");
+    }
+}
