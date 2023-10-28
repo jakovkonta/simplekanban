@@ -1,0 +1,58 @@
+﻿@page "/Create"
+@using SimpleKanBanUI.Models;
+@inject ICategoryData categoryData
+@inject IStatusData statusData
+@inject IItemData itemData
+@inject IUserData userData
+@inject NavigationManager navManager
+
+<h1>Create New Item</h1>
+
+<div>
+    <div>
+        <button @onclick="ClosePage">X</button>
+    </div>
+</div>
+
+@code {
+    private CreateItemModel item = new();
+    private List<CategoryModel> categories;
+    private List<StatusModel> statuses;
+    private UserModel loggedInUser;
+
+    protected override async Task OnInitializedAsync()
+    {
+        categories = await categoryData.GetAllCategories();
+        statuses = await statusData.GetAllStatuses();
+
+        //TODO - Replace with user lookup
+        loggedInUser = await userData.GetUserFromAuthentication("abc-123");
+    }
+
+    private async Task Create()
+    {
+        ItemModel i = new();
+        i.Title = item.Title;
+        i.Description = item.Description;
+        i.Author = new BasicUserModel(loggedInUser);
+        i.DateCreated = DateTime.UtcNow;
+        i.DateModified = DateTime.UtcNow;
+        i.ItemStatus = statuses[0];
+        i.ItemCategory = categories.Where(c => c.Id == item.CategoryId).FirstOrDefault();
+
+        if (i.ItemCategory is null)
+        {
+            item.CategoryId = "";
+            return;
+        }
+
+        await itemData.CreateItem(i);
+        item = new();
+        ClosePage();
+    }
+
+    private void ClosePage()
+    {
+        navManager.NavigateTo("/");
+    }
+}
