@@ -1,5 +1,6 @@
 ﻿@page "/Create"
 @using SimpleKanBanUI.Models;
+@using SimpleKanBanUI.Components;
 @inject ICategoryData categoryData
 @inject IStatusData statusData
 @inject IItemData itemData
@@ -12,6 +13,41 @@
     <div>
         <button @onclick="ClosePage">X</button>
     </div>
+    @if (categories is not null)
+    {
+        <EditForm Model="item" OnValidSubmit="Create">
+            <DataAnnotationsValidator/>
+            <ValidationSummary/>
+            <div>
+                <label for="item-text">Item</label>
+                <div>Focus on the topic of an item.</div>
+                <InputText id="item-text" @bind-Value="item.Title"/>
+            </div>
+            <div>
+                <label for="category">Category</label>
+                <div>Choose one category.</div>
+                <div>
+                    <MyInputRadiGroup id="category" @bind-Value="item.CategoryId">
+                        @foreach (var c in categories)
+                        {
+                            <div>
+                                <InputRadio Value="@c.Id" id="@c.Id" />
+                                <label for="@c.Id" >@c.CategoryName - @c.CategoryDescription</label>
+                            </div>
+                        }
+                    </MyInputRadiGroup>
+                </div>
+            </div>
+            <div>
+                <label for="description-text">Description</label>
+                <div>Describe your item.</div>
+                <InputTextArea id="description-text" @bind-Value="item.Description" />
+            </div>
+            <div>
+                <button type="submit">Create</button>
+            </div>
+        </EditForm>
+    }
 </div>
 
 @code {

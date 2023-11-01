@@ -13,6 +13,6 @@ public class CreateItemModel
     [Display(Name = "Category")]
     public string CategoryId { get; set; }
 
-    [MaxLength(100)]
+    [MaxLength(500)]
     public string Description { get; set; }
 }
