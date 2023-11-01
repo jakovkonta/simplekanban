@@ -9,7 +9,7 @@
 <h1>Training KanBan</h1>
 
 <div>
-    <button>New item</button>
+    <button @onclick="NewItemPage">New item</button>
 </div>
 
 <div class="row">
@@ -115,5 +115,10 @@
             inTestingItems = items.Where(i => i.ItemStatus.StatusName.Equals(Enum.GetName(Statuses.Testing))).ToList();
             doneItems = items.Where(i => i.ItemStatus.StatusName.Equals(Enum.GetName(Statuses.Done))).ToList();
         }
+    }
+
+    private void NewItemPage()
+    {
+        navManager.NavigateTo("/Create");
     }
 }

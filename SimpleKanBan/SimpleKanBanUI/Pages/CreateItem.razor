@@ -1,0 +1,94 @@
+﻿@page "/Create"
+@using SimpleKanBanUI.Models;
+@using SimpleKanBanUI.Components;
+@inject ICategoryData categoryData
+@inject IStatusData statusData
+@inject IItemData itemData
+@inject IUserData userData
+@inject NavigationManager navManager
+
+<h1>Create New Item</h1>
+
+<div>
+    <div>
+        <button @onclick="ClosePage">X</button>
+    </div>
+    @if (categories is not null)
+    {
+        <EditForm Model="item" OnValidSubmit="Create">
+            <DataAnnotationsValidator/>
+            <ValidationSummary/>
+            <div>
+                <label for="item-text">Item</label>
+                <div>Focus on the topic of an item.</div>
+                <InputText id="item-text" @bind-Value="item.Title"/>
+            </div>
+            <div>
+                <label for="category">Category</label>
+                <div>Choose one category.</div>
+                <div>
+                    <MyInputRadiGroup id="category" @bind-Value="item.CategoryId">
+                        @foreach (var c in categories)
+                        {
+                            <div>
+                                <InputRadio Value="@c.Id" id="@c.Id" />
+                                <label for="@c.Id" >@c.CategoryName - @c.CategoryDescription</label>
+                            </div>
+                        }
+                    </MyInputRadiGroup>
+                </div>
+            </div>
+            <div>
+                <label for="description-text">Description</label>
+                <div>Describe your item.</div>
+                <InputTextArea id="description-text" @bind-Value="item.Description" />
+            </div>
+            <div>
+                <button type="submit">Create</button>
+            </div>
+        </EditForm>
+    }
+</div>
+
+@code {
+    private CreateItemModel item = new();
+    private List<CategoryModel> categories;
+    private List<StatusModel> statuses;
+    private UserModel loggedInUser;
+
+    protected override async Task OnInitializedAsync()
+    {
+        categories = await categoryData.GetAllCategories();
+        statuses = await statusData.GetAllStatuses();
+
+        //TODO - Replace with user lookup
+        loggedInUser = await userData.GetUserFromAuthentication("abc-123");
+    }
+
+    private async Task Create()
+    {
+        ItemModel i = new();
+        i.Title = item.Title;
+        i.Description = item.Description;
+        i.Author = new BasicUserModel(loggedInUser);
+        i.DateCreated = DateTime.UtcNow;
+        i.DateModified = DateTime.UtcNow;
+        i.ItemStatus = statuses[0];
+        i.ItemCategory = categories.Where(c => c.Id == item.CategoryId).FirstOrDefault();
+
+        if (i.ItemCategory is null)
+        {
+            item.CategoryId = "";
+            return;
+        }
+
+        await itemData.CreateItem(i);
+        item = new();
+        ClosePage();
+    }
+
+    private void ClosePage()
+    {
+        navManager.NavigateTo("/");
+    }
+}
