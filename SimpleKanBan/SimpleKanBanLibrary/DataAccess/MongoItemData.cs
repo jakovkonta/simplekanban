@@ -34,6 +34,21 @@ public class MongoItemData : IItemData
         return output;
     }
 
+    public async Task<List<ItemModel>> GetAllUserItems(string userId)
+    {
+        var output = _cache.Get<List<ItemModel>>(userId);
+
+        if (output is null)
+        {
+            var result = await _items.FindAsync(i => i.Author.Id == userId);
+            output = result.ToList();
+
+            _cache.Set(userId, output, TimeSpan.FromMinutes(1));
+        }
+
+        return output;
+    }
+
     public async Task<ItemModel> GetItem(string id)
     {
         var result = await _items.FindAsync(i => i.Id == id);

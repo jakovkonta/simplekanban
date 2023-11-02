@@ -1,0 +1,140 @@
+﻿@page "/Profile"
+@inject IItemData itemData
+@inject IUserData userData
+@inject NavigationManager navManager
+
+<h1>My Profile</h1>
+
+<div>
+    <div>
+        <button @onclick="ClosePage">X</button>
+    </div>
+</div>
+
+<div>
+    <h2>My account</h2>
+    <p2>
+        <a href="#">
+            Edit My Profile
+        </a>
+    </p2>
+</div>
+
+@if (newItems?.Count > 0)
+{
+    <div>
+        <h2>New Items</h2>
+        <p>These are your new items.</p>
+
+        @foreach (var newItem in newItems)
+        {
+            <hr />
+            <div>
+                @newItem.Title
+            </div>
+            <p>
+                @newItem.DateCreated.ToString("dd.MM.yy")
+            </p>
+            <p>
+                @newItem.Description
+            </p>
+        }
+    </div>
+}
+
+@if (inProgressItems?.Count > 0)
+{
+    <div>
+        <h2>In Progress Items</h2>
+        <p>These are the items you are currently working on.</p>
+
+        @foreach (var progressItem in inProgressItems) //TODO - Create component like on an Index page
+        {
+            <hr />
+            <div>
+                @progressItem.Title
+            </div>
+            <p>
+                @progressItem.DateCreated.ToString("dd.MM.yy")
+            </p>
+            <p>
+                @progressItem.Description
+            </p>
+        }
+    </div>
+}
+
+@if (inTestingItems?.Count > 0)
+{
+    <div>
+        <h2>In Testing Items</h2>
+        <p>These are the your items that are currently under the test.</p>
+
+        @foreach (var testItem in inTestingItems)
+        {
+            <hr />
+            <div>
+                @testItem.Title
+            </div>
+            <p>
+                @testItem.DateCreated.ToString("dd.MM.yy")
+            </p>
+            <p>
+                @testItem.Description
+            </p>
+        }
+    </div>
+}
+
+@if (doneItems?.Count > 0)
+{
+    <div>
+        <h2>In Testing Items</h2>
+        <p>These are the your items that are finished.</p>
+
+        @foreach (var doneItem in doneItems)
+        {
+            <hr />
+            <div>
+                @doneItem.Title
+            </div>
+            <p>
+                @doneItem.DateCreated.ToString("dd.MM.yy")
+            </p>
+            <p>
+                @doneItem.Description
+            </p>
+        }
+    </div>
+}
+
+@code {
+    private UserModel loggedInUser;
+    private List<ItemModel> userItems;
+    private List<ItemModel> newItems;
+    private List<ItemModel> inProgressItems;
+    private List<ItemModel> inTestingItems;
+    private List<ItemModel> doneItems;
+
+    protected async override Task OnInitializedAsync()
+    {
+        //TODO - Replace with user lookup
+        loggedInUser = await userData.GetUserFromAuthentication("abc-123");
+
+        var results = await itemData.GetAllUserItems(loggedInUser.Id);
+
+        if (loggedInUser is not null && results is not null)
+        {
+            userItems = results.OrderByDescending(i => i.DateCreated).ToList();
+            newItems = userItems.Where(i => i.ItemStatus.StatusName.Equals(Enum.GetName(Statuses.New))).ToList();
+            inProgressItems = userItems.Where(i => i.ItemStatus.StatusName.Equals(Enum.GetName(Statuses.Progress))).ToList();
+            inTestingItems = userItems.Where(i => i.ItemStatus.StatusName.Equals(Enum.GetName(Statuses.Testing))).ToList();
+            doneItems = userItems.Where(i => i.ItemStatus.StatusName.Equals(Enum.GetName(Statuses.Done))).ToList();
+        }
+    }
+
+    private void ClosePage()
+    {
+        navManager.NavigateTo("/");
+    }
+}
