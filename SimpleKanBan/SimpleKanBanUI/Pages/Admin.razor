@@ -1,0 +1,51 @@
+﻿@page "/Admin"
+@inject IItemData itemData
+@inject IUserData userData
+@inject NavigationManager navManager
+
+<h1>Admin</h1>
+
+<div>
+    <div>
+        <button @onclick="ClosePage">X</button>
+    </div>
+</div>
+
+@if (doneItems is not null)
+{
+    foreach (var d in doneItems)
+    {
+        <div>
+            <div>
+                @d.Title
+            </div>
+            <div>
+                <button @onclick="(() => ArchiveItem(d))">Archive</button>
+            </div>
+        </div>
+    }
+}
+
+@code {
+    private List<ItemModel> doneItems;
+
+    protected async override Task OnInitializedAsync()
+    {
+        //TODO - something else goes here?
+        // Admin page should create teams and be able to archive done items
+        var items = await itemData.GetAllItems();
+        doneItems = items.Where(i => i.ItemStatus.StatusName.Equals(Enum.GetName(Statuses.Done))).ToList();
+    }
+
+    private async Task ArchiveItem(ItemModel item)
+    {
+        item.Archived = true;
+        doneItems.Remove(item);
+        await itemData.UpdateItem(item);
+    }
+
+    private void ClosePage()
+    {
+        navManager.NavigateTo("/");
+    }
+}
