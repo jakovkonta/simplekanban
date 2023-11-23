@@ -43,6 +43,7 @@ public class Program
                 }
                 ));
 
+        app.MapControllers();
         app.MapBlazorHub();
         app.MapFallbackToPage("/_Host");
 
