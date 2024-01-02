@@ -1,6 +1,8 @@
 ﻿@page "/Create"
+@attribute [Authorize]
 @using SimpleKanBanUI.Models;
 @using SimpleKanBanUI.Components;
+@inject AuthenticationStateProvider authProvider;
 @inject ICategoryData categoryData
 @inject IStatusData statusData
 @inject IItemData itemData
@@ -61,8 +63,9 @@
         categories = await categoryData.GetAllCategories();
         statuses = await statusData.GetAllStatuses();
 
-        //TODO - Replace with user lookup
-        loggedInUser = await userData.GetUserFromAuthentication("abc-123");
+        var authState = await authProvider.GetAuthenticationStateAsync();
+        string objectId = authState.User.Claims.FirstOrDefault(c => c.Type.Contains("objectidentifier"))?.Value;
+        loggedInUser = await userData.GetUserFromAuthentication(objectId);
     }
 
     private async Task Create()

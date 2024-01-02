@@ -1,4 +1,5 @@
 ﻿@page "/Admin"
+@attribute [Authorize(Policy = "Admin")]
 @inject IItemData itemData
 @inject IUserData userData
 @inject NavigationManager navManager
