@@ -88,7 +88,7 @@
             loggedInUser = await userData.GetUserFromAuthentication(objectId) ?? new();
 
             string firstName = authState.User.Claims.FirstOrDefault(c => c.Type.Contains("givenname"))?.Value;
-            string lastName = authState.User.Claims.FirstOrDefault(c => c.Type.Contains("surnname"))?.Value;
+            string lastName = authState.User.Claims.FirstOrDefault(c => c.Type.Contains("surname"))?.Value;
             string displaytName = authState.User.Claims.FirstOrDefault(c => c.Type.Equals("name"))?.Value;
             string email = authState.User.Claims.FirstOrDefault(c => c.Type.Contains("email"))?.Value;
 
