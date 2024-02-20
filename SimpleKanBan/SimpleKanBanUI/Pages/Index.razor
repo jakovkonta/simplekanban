@@ -10,14 +10,14 @@
 <h1 class="page-heading text-uppercase mb-4">Training KanBan</h1>
 
 <div class="newitem-container">
-    <button @onclick="NewItemPage" class="newitem-btn btn btn-outline-light btn-lg text-uppercase">New item</button>
+    <button @onclick="NewItemPage" class="newitem-btn btn btn-outline-light btn-lg">New item</button>
 </div>
 
 <div class="row">
     @if (items is not null)
     {
         <div class="column">
-            <h2 class="page-heading mb-2">New</h2>
+            <h2>New</h2>
             @if (newItems is not null)
             {
                 foreach (var newItem in newItems)
