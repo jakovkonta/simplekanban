@@ -149,6 +149,8 @@ a, .btn-link {
 .item-entry-text-title {
     flex-grow: 1;
     padding-top: 10px;
+    padding-bottom: 20px;
+    text-decoration: underline;
 }
 
 .item-entry-text-description {
