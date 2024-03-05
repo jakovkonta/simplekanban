@@ -1,14 +1,14 @@
 ﻿@inject NavigationManager navManager
 
-<div class="indexDisplayItem">
-<div class="item-entry-text" @ondblclick="(() => OpenDetails(Item))">
-    <div>
-        <div @onclick="(() => OpenDetails(Item))" class="itemTitle">
-             @Item.Title
+<div class="item-entry">
+    <div class="item-entry-text" @ondblclick="(() => OpenDetails(Item))">
+        <div>
+            <div @onclick="(() => OpenDetails(Item))" class="item-entry-text-title">
+                 @Item.Title
+            </div>
         </div>
+        <p class="item-entry-text-description">@Item.Description</p>
     </div>
-    <p class="item-entry-text-description">@Item.Description</p>
-</div>
 </div>
 
 @code {

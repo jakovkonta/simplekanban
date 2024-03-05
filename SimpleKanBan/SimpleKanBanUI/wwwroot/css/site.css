@@ -101,17 +101,6 @@ a, .btn-link {
     border-radius: 15px;
 }
 
-.itemTitle {
-    background: none;
-    color: inherit;
-    border: none;
-    padding: 0;
-    font: inherit;
-    cursor: pointer;
-    outline: inherit;
-    text-decoration: underline;
-}
-
 .page-heading {
     text-align: center;
 }
@@ -140,4 +129,28 @@ a, .btn-link {
 .btn:focus,
 .form-control:focus {
     box-shadow: none;
+}
+
+.item-entry {
+    display: grid;
+    border-radius: 20px;
+    margin: 20px 0;
+    box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
+}
+
+.item-entry-text {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    padding-left: 20px;
+    background-color: #FFFFFF;
+}
+
+.item-entry-text-title {
+    flex-grow: 1;
+    padding-top: 10px;
+}
+
+.item-entry-text-description {
+
 }
