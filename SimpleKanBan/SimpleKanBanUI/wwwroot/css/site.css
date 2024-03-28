@@ -28,7 +28,13 @@ h1:focus {
 }
 
 a, .btn-link {
-    color: #0071c1;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+a:hover, .btn-link:hover {
+    color: #FFFFFF;
+    text-decoration: underline;
 }
 
 .btn-primary {
@@ -150,9 +156,22 @@ a, .btn-link {
     flex-grow: 1;
     padding-top: 10px;
     padding-bottom: 20px;
-    text-decoration: underline;
+    text-decoration: none;
+}
+
+.item-entry-text-title:hover {
+    cursor: pointer;
 }
 
 .item-entry-text-description {
+}
 
+.nav-links {
+    display: flex;
+    text-align: center;
+    justify-content: flex-end;
+}
+
+.login-link {
+    padding-left: 1rem;
 }
