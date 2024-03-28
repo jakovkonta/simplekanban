@@ -161,6 +161,7 @@ a:hover, .btn-link:hover {
 
 .item-entry-text-title:hover {
     cursor: pointer;
+    text-decoration: underline;
 }
 
 .item-entry-text-description {
