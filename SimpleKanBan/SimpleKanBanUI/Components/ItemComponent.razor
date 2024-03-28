@@ -1,14 +1,14 @@
 ﻿@inject NavigationManager navManager
 
-<div class="indexDisplayItem">
-<div @ondblclick="(() => OpenDetails(Item))">
-    <div>
-        <button @onclick="(() => OpenDetails(Item))" class="itemTitle">
-             @Item.Title
-        </button>
+<div class="item-entry">
+    <div class="item-entry-text" @ondblclick="(() => OpenDetails(Item))">
+        <div>
+            <div @onclick="(() => OpenDetails(Item))" class="item-entry-text-title">
+                 @Item.Title
+            </div>
+        </div>
+        <p class="item-entry-text-description">@Item.Description</p>
     </div>
-    <p>@Item.Description</p>
-</div>
 </div>
 
 @code {
@@ -22,4 +22,20 @@
         navManager.NavigateTo($"Details/{item.Id}");
     }
 
+    private string GetItemCategoryClass(ItemModel item)
+    {
+        if (item is null || item.ItemStatus is null)
+        {
+            return "item-entry-status-none";
+        }
+
+        string output = item.ItemStatus.StatusName switch
+        {
+            "PBI" => "item-entry-category-pbi",
+            "Bug" => "item-entry-category-bug",
+            _ => "item-entry-status-none",
+        };
+
+        return output;
+    }
 }

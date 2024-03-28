@@ -1,7 +1,26 @@
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,700;0,900;1,700;1,900&display=swap');
 
 html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 18px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    color: #FFFFFF;
+}
+
+body{
+    background: url(../images/SimpleKanBanBackground.jpg) no-repeat center center fixed;
+    background-size: cover;
+    height: 100%;
+}
+
+h1 {
+    padding-top: 1rem;
 }
 
 h1:focus {
@@ -9,7 +28,13 @@ h1:focus {
 }
 
 a, .btn-link {
-    color: #0071c1;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+a:hover, .btn-link:hover {
+    color: #FFFFFF;
+    text-decoration: underline;
 }
 
 .btn-primary {
@@ -82,13 +107,72 @@ a, .btn-link {
     border-radius: 15px;
 }
 
-.itemTitle {
-    background: none;
-    color: inherit;
-    border: none;
-    padding: 0;
-    font: inherit;
+.page-heading {
+    text-align: center;
+}
+
+.newitem-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3rem;
+}
+
+.newitem-btn {
+    font-family: 'Montserrat', sans-serif;
+    border-width: 3px;
+    border-radius: 10px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    font-weight: 900;
+}
+
+.btn-outline-light:hover {
+    color: #39BAD8;
+    background-color: #FFFFFF;
+    border-color: #FFFFFF;
+}
+
+.btn:focus,
+.form-control:focus {
+    box-shadow: none;
+}
+
+.item-entry {
+    display: grid;
+    border-radius: 20px;
+    margin: 20px 0;
+    box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
+}
+
+.item-entry-text {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    padding-left: 20px;
+    background-color: #FFFFFF;
+}
+
+.item-entry-text-title {
+    flex-grow: 1;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    text-decoration: none;
+}
+
+.item-entry-text-title:hover {
     cursor: pointer;
-    outline: inherit;
     text-decoration: underline;
+}
+
+.item-entry-text-description {
+}
+
+.nav-links {
+    display: flex;
+    text-align: center;
+    justify-content: flex-end;
+}
+
+.login-link {
+    padding-left: 1rem;
 }

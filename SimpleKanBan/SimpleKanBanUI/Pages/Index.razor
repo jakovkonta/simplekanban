@@ -7,10 +7,10 @@
 @inject NavigationManager navManager
 @inject ProtectedSessionStorage sessionStorage
 
-<h1>Training KanBan</h1>
+<h1 class="page-heading text-uppercase mb-4">Training KanBan</h1>
 
-<div>
-    <button @onclick="NewItemPage">New item</button>
+<div class="newitem-container">
+    <button @onclick="NewItemPage" class="newitem-btn btn btn-outline-light btn-lg">New item</button>
 </div>
 
 <div class="row">
@@ -22,7 +22,7 @@
             {
                 foreach (var newItem in newItems)
                 {
-                   <ItemComponent Item = "newItem"/>
+                    <ItemComponent Item="newItem" />
                 }
             }
         </div>
@@ -177,6 +177,13 @@
 
     private void NewItemPage()
     {
-        navManager.NavigateTo("/Create");
+        if (loggedInUser is not null)
+        {
+            navManager.NavigateTo("/Create");
+        }
+        else
+        {
+            navManager.NavigateTo("/MicrosoftIdentity/Account/SignIn", true);
+        }
     }
 }
