@@ -2,17 +2,25 @@
 @inject IItemData itemData
 @inject NavigationManager navManager
 
-<h1>Item Details</h1>
+<h1 class="page-heading text-uppercase mb-4">Item Details</h1>
 
-<div>
-    @if (item is not null)
-    {
-        <div>@item.Title</div>
-        <div>@item.ItemStatus.StatusName</div>
-        <div>@item.Description</div>
-    }
-    <div>
-        <button @onclick="ClosePage">X</button>
+<div class="row justify-content-center detail-form">
+    <div class="col-xl-8 col-lg-10 form-layout">
+        <div class="close-button-section">
+            <button class="btn btn-close" @onclick="ClosePage"></button>
+        </div>
+        @if (item is not null)
+        {
+            <div class="item-detail-text">
+                <div class="fw-bold mb-2 item-detail-item">@item.Title</div>
+                <div class="mb-2 item-detail-author">@item.Author.DisplayName</div>
+                <div class="mb-2 item-detail-status">@item.ItemStatus.StatusName</div>
+                <div class="mb-2">@item.Description</div>
+                <div class="item-detail-date">
+                    <div>@item.DateCreated.ToString("dd.MM.yyyy")</div>
+                </div>
+            </div>
+        }
     </div>
 </div>
 

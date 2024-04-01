@@ -253,3 +253,25 @@ a:hover, .btn-link:hover {
         background-color: #FFFFFF;
         border-width: 3px;
     }
+
+.item-detail-date {
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.item-detail-text {
+    display: flex;
+    flex-direction: column;
+    padding-left: 27px;
+    padding-top: 0;
+    padding-bottom: 10px;
+}
+
+.item-detail-item {
+    font-size: 1.25rem;
+}
+
+.item-detail-author {
+    color: #A9A9A9;
+}
