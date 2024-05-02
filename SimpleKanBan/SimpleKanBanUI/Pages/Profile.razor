@@ -5,17 +5,17 @@
 @inject IUserData userData
 @inject NavigationManager navManager
 
-<h1>My Profile</h1>
+<h1 class="page-heading text-uppercase mb-4">My Profile</h1>
 
-<div>
-    <div>
-        <button @onclick="ClosePage">X</button>
+<div class="row">
+    <div class="col-12 close-button-section">
+        <button class="btn btn-close" @onclick="ClosePage"></button>
     </div>
 </div>
 
-<div>
-    <h2>My account</h2>
-    <p2>
+<div class="form-layout mb-3">
+    <h2 class="my-submission-heading">My account</h2>
+    <p2 class="my-submission-text">
         <a href="MicrosoftIdentity/Account/EditProfile">
             Edit My Profile
         </a>
@@ -24,20 +24,20 @@
 
 @if (newItems?.Count > 0)
 {
-    <div>
-        <h2>New Items</h2>
-        <p>These are your new items.</p>
+    <div class="form-layout mb-3">
+        <h2 class="my-submission-heading">New Items</h2>
+        <p class="my-submission-text">These are your new items.</p>
 
         @foreach (var newItem in newItems)
         {
-            <hr />
-            <div>
+            <hr class="my-submission-separator"/>
+            <div class="fw-bold item-detail-item">
                 @newItem.Title
             </div>
-            <p>
+            <p class="my-submission-text">
                 @newItem.DateCreated.ToString("dd.MM.yy")
             </p>
-            <p>
+            <p class="my-submission-text">
                 @newItem.Description
             </p>
         }
@@ -46,20 +46,20 @@
 
 @if (inProgressItems?.Count > 0)
 {
-    <div>
-        <h2>In Progress Items</h2>
-        <p>These are the items you are currently working on.</p>
+    <div class="form-layout mb-3">
+        <h2 class="my-submission-heading">In Progress Items</h2>
+        <p class="my-submission-text">These are the items you are currently working on.</p>
 
         @foreach (var progressItem in inProgressItems) //TODO - Create component like on an Index page
         {
-            <hr />
-            <div>
+            <hr class="my-submission-separator"/>
+            <div class="fw-bold item-detail-item">
                 @progressItem.Title
             </div>
-            <p>
+            <p class="my-submission-text">
                 @progressItem.DateCreated.ToString("dd.MM.yy")
             </p>
-            <p>
+            <p class="my-submission-text">
                 @progressItem.Description
             </p>
         }
@@ -68,20 +68,20 @@
 
 @if (inTestingItems?.Count > 0)
 {
-    <div>
-        <h2>In Testing Items</h2>
-        <p>These are the your items that are currently under the test.</p>
+    <div class="form-layout mb-3">
+        <h2 class="my-submission-heading">In Testing Items</h2>
+        <p class="my-submission-text">These are the your items that are currently under the test.</p>
 
         @foreach (var testItem in inTestingItems)
         {
-            <hr />
-            <div>
+            <hr class ="my-submission-separator"/>
+            <div class="fw-bold item-detail-item">
                 @testItem.Title
             </div>
-            <p>
+            <p class="my-submission-text">
                 @testItem.DateCreated.ToString("dd.MM.yy")
             </p>
-            <p>
+            <p class="my-submission-text">
                 @testItem.Description
             </p>
         }
@@ -90,20 +90,20 @@
 
 @if (doneItems?.Count > 0)
 {
-    <div>
-        <h2>In Testing Items</h2>
-        <p>These are the your items that are finished.</p>
+    <div class="form-layout mb-3">
+        <h2 class="my-submission-heading">In Testing Items</h2>
+        <p class="my-submission-text">These are the your items that are finished.</p>
 
         @foreach (var doneItem in doneItems)
         {
-            <hr />
-            <div>
+            <hr class ="my-submission-separator"/>
+            <div class="fw-bold item-detail-item">
                 @doneItem.Title
             </div>
-            <p>
+            <p class="my-submission-text">
                 @doneItem.DateCreated.ToString("dd.MM.yy")
             </p>
-            <p>
+            <p class="my-submission-text">
                 @doneItem.Description
             </p>
         }
