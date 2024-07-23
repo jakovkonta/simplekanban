@@ -13,51 +13,12 @@
     <button @onclick="NewItemPage" class="newitem-btn btn btn-outline-light btn-lg">New item</button>
 </div>
 
-<div class="row">
-    @if (items is not null)
-    {
-        <div class="column">
-            <h2>New</h2>
-            @if (newItems is not null)
-            {
-                foreach (var newItem in newItems)
-                {
-                    <ItemComponent Item="newItem" />
-                }
-            }
-        </div>
-        <div class="column">
-            <h2>In Progress</h2>
-            @if (inProgressItems is not null)
-            {
-                foreach (var progressItem in inProgressItems)
-                {
-                    <ItemComponent Item="progressItem" />
-                }
-            }
-        </div>
-        <div class="column">
-            <h2>In Testing</h2>
-            @if (inTestingItems is not null)
-            {
-                foreach (var testingItem in inTestingItems)
-                {
-                    <ItemComponent Item="testingItem" />
-                }
-            }
-        </div>
-        <div class="column">
-            <h2>Done</h2>
-            @if (doneItems is not null)
-            {
-                foreach (var doneItem in doneItems)
-                {
-                    <ItemComponent Item="doneItem" />
-                }
-            }
-        </div>
-    }
-</div>
+<ItemContainer Items="items">
+    <ItemList ListStatus="Statuses.New" AllowedStatuses="@(new ItemStat[] { Statuses.New, Statuses.Progress})" />
+    <ItemList ListStatus="Statuses.Progress" AllowedStatuses="@(new ItemStatus[] { Statuses.Todo})" />
+    <ItemList ListStatus="Statuses.Testing" AllowedStatuses="@(new ItemStatus[] { Statuses.Started})" />
+    <ItemList ListStatus="Statuses.Done" AllowedStatuses="@(new ItemStatus[] { Statuses.Done })" />
+</ItemContainer>
 
 @code{
     private List<ItemModel> items;
@@ -68,6 +29,7 @@
     private List<CategoryModel> categories;
     private List<StatusModel> statuses;
     private UserModel loggedInUser;
+    private ItemModel _draggedItem;
 
     private string searchText = "";
 
@@ -186,4 +148,14 @@
             navManager.NavigateTo("/MicrosoftIdentity/Account/SignIn", true);
         }
     }
+
+    private void HandleDraggedItem(ItemModel draggedItem)
+    {
+        _draggedItem = draggedItem;
+    }
+
+    //private async Task HandleDrop()
+    //{
+    //    await Container.UpdateItemStatusAsync(_draggedItem.ItemStatus);
+    //}
 }

@@ -1,0 +1,32 @@
+﻿@inject NavigationManager navManager
+@inject IItemData itemData
+
+<div class="items-container">
+    <CascadingValue Value="this">
+        @ChildContent
+    </CascadingValue>
+</div>
+
+@code {
+    [Parameter]
+    public List<ItemModel> Items { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public EventCallback<ItemModel> OnStatusUpdated { get; set; }
+
+    public ItemModel Payload { get; set; }
+
+    public async Task UpdateJobAsync(Statuses newStatus)
+    {
+        var item = Items.SingleOrDefault(x => x.Id == Payload.Id);
+        if (item != null)
+        {
+            //item.ItemStatus = newStatus;
+            item.DateModified = DateTime.Now;
+            await OnStatusUpdated.InvokeAsync(Payload);
+        }
+    }
+}

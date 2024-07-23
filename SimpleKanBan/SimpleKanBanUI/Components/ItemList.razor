@@ -1,0 +1,51 @@
+﻿@inject NavigationManager navManager
+@inject IItemData itemData
+
+<div class="item-status">
+    <h3>@ListStatus (@Items.Count())</h3>
+    <ul class="dropzone @dropClass"
+        ondragover="event.preventDefault();"
+        ondragstart="event.dataTransfer.setData('', event.target.id);"
+        @ondrop="HandleDrop"
+        @ondragenter="HandleDragEnter"
+        @ondragleave="HandleDragLeave">
+        @foreach (var item in Items)
+        {
+            <ItemComponent ItemModel="item" />
+        }
+    </ul>
+</div>
+
+@code {
+    [CascadingParameter] ItemContainer Container { get; set; }
+
+    [Parameter] public Statuses ListStatus { get; set; }
+
+    [Parameter] public Statuses[] AllowedStatuses { get; set; }
+
+    List<ItemModel> Items = new List<ItemModel> ();
+
+    string dropClass = "";
+
+    protected override void OnParametersSet() {
+        Items.Clear();
+        Items.AddRange(Container.Items.Where(x => x.ItemStatus == ListStatus));
+    }
+
+    private void HandleDragEnter() {
+        if (ListStatus == Container.Payload.ItemStatus.StatusDescription) return;
+        if (AllowedStatuses != null && !AllowedStatuses.Contains(Container.Payload.Status)) {
+            dropClass = "no-drop";
+        } else {
+            dropClass = "can-drop";
+        }
+    }
+    private void HandleDragLeave() {
+        dropClass = "";
+    }
+    private async Task HandleDrop() {
+        dropClass = "";
+        if (AllowedStatuses != null && !AllowedStatuses.Contains(Container.Payload.Status)) return;
+        await Container.UpdateJobAsync(ListStatus);
+    }
+}
