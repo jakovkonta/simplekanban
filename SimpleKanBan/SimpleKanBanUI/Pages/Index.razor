@@ -13,12 +13,15 @@
     <button @onclick="NewItemPage" class="newitem-btn btn btn-outline-light btn-lg">New item</button>
 </div>
 
-<ItemContainer Items="items">
-    <ItemList ListStatus="Statuses.New" AllowedStatuses="@(new ItemStat[] { Statuses.New, Statuses.Progress})" />
-    <ItemList ListStatus="Statuses.Progress" AllowedStatuses="@(new ItemStatus[] { Statuses.Todo})" />
-    <ItemList ListStatus="Statuses.Testing" AllowedStatuses="@(new ItemStatus[] { Statuses.Started})" />
-    <ItemList ListStatus="Statuses.Done" AllowedStatuses="@(new ItemStatus[] { Statuses.Done })" />
-</ItemContainer>
+@if (items is not null)
+{
+    <ItemContainer Items="items">
+        <ItemList ListStatus="Statuses.New" AllowedStatuses="@(new Statuses[] { Statuses.New, Statuses.Progress})" />
+        <ItemList ListStatus="Statuses.Progress" AllowedStatuses="@(new Statuses[] { Statuses.Testing})" />
+        <ItemList ListStatus="Statuses.Testing" AllowedStatuses="@(new Statuses[] { Statuses.Done})" />
+        <ItemList ListStatus="Statuses.Done" AllowedStatuses="@(new Statuses[] { Statuses.Done })" />
+    </ItemContainer>
+}
 
 @code{
     private List<ItemModel> items;

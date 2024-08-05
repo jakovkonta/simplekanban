@@ -291,3 +291,19 @@ a:hover, .btn-link:hover {
     height: 2px;
     opacity: 1;
 }
+
+.items-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+
+.item-status {
+    display: flex;
+    flex-direction: column;
+    width: 312px;
+}
+
+    .item-status ul {
+        flex: 1;
+    }
